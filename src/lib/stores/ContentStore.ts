@@ -1,5 +1,5 @@
-import { writable } from 'svelte/store';
-import { supabase } from '../supabase';
+import { writable } from "svelte/store";
+import { supabase } from "../supabase";
 
 export interface SocialLink {
   name: string;
@@ -27,38 +27,39 @@ export interface HomeContent {
 
 const defaultContent: HomeContent = {
   hero: {
-    title: "Développeur Passionné",
-    subtitle: "Transformez vos idées en réalité numérique"
+    title: "Développeur Web Mobile",
+    subtitle: "Transformez vos idées en réalité numérique",
   },
   about: {
     title: "À Propos",
-    description: "Développeur web passionné par la création d'applications modernes",
-    experience: "5"
+    description:
+      "Développeur web passionné par la création d'applications modernes",
+    experience: "5",
   },
   contact: {
     title: "Contactez-moi",
-    description: "Discutons de votre projet"
+    description: "Discutons de votre projet",
   },
   socials: [
     {
-      name: 'LinkedIn',
-      icon: 'fa-linkedin-in',
-      url: 'https://linkedin.com/in/votre-profil',
-      color: 'bg-[#0077b5]'
+      name: "LinkedIn",
+      icon: "fa-linkedin-in",
+      url: "https://linkedin.com/in/votre-profil",
+      color: "bg-[#0077b5]",
     },
     {
-      name: 'Malt',
-      icon: 'fa-m',
-      url: 'https://www.malt.fr/profile/votre-profil',
-      color: 'bg-[#FC5757]'
+      name: "Malt",
+      icon: "fa-m",
+      url: "https://www.malt.fr/profile/votre-profil",
+      color: "bg-[#FC5757]",
     },
     {
-      name: 'GitHub',
-      icon: 'fa-github',
-      url: 'https://github.com/votre-profil',
-      color: 'bg-[#333333]'
-    }
-  ]
+      name: "GitHub",
+      icon: "fa-github",
+      url: "https://github.com/votre-profil",
+      color: "bg-[#333333]",
+    },
+  ],
 };
 
 function createContentStore() {
@@ -66,12 +67,12 @@ function createContentStore() {
 
   return {
     subscribe,
-    
+
     async loadContent() {
       const { data, error } = await supabase
-        .from('content')
-        .select('*')
-        .eq('id', 'home')
+        .from("content")
+        .select("*")
+        .eq("id", "home")
         .single();
 
       if (error || !data) {
@@ -82,12 +83,12 @@ function createContentStore() {
     },
 
     async initializeContent() {
-      const { error } = await supabase
-        .from('content')
-        .insert([{
-          id: 'home',
-          content: defaultContent
-        }]);
+      const { error } = await supabase.from("content").insert([
+        {
+          id: "home",
+          content: defaultContent,
+        },
+      ]);
 
       if (error) throw error;
       set(defaultContent);
@@ -95,13 +96,13 @@ function createContentStore() {
 
     async updateContent(content: Partial<HomeContent>) {
       const { error } = await supabase
-        .from('content')
+        .from("content")
         .update({ content })
-        .eq('id', 'home');
+        .eq("id", "home");
 
       if (error) throw error;
       set({ ...defaultContent, ...content });
-    }
+    },
   };
 }
 

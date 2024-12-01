@@ -10,8 +10,6 @@
   let activeTab = 'stats';
   let title = '';
   let description = '';
-  let logo: File | null = null;
-  let images: File[] = [];
   let technologies: string[] = [];
   let currentTech = '';
   let isLoading = false;
@@ -23,15 +21,6 @@
   });
 
   async function handleSubmit() {
-    if (!logo) {
-      error = 'Please select a logo';
-      return;
-    }
-
-    if (images.length === 0) {
-      error = 'Please add at least one image';
-      return;
-    }
 
     isLoading = true;
     error = '';
@@ -40,16 +29,12 @@
       await projectStore.addProject({
         title,
         description,
-        logo,
-        images,
-        technologies
+        technologies,
       });
       
       // Reset form
       title = '';
       description = '';
-      logo = null;
-      images = [];
       technologies = [];
       error = '';
     } catch (e) {
@@ -60,34 +45,16 @@
     }
   }
 
-  function handleLogoChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      logo = input.files[0];
-    }
-  }
-
-  function handleImagesChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      images = [...images, ...Array.from(input.files)];
-    }
-  }
-
   function addTech() {
     if (currentTech) {
       technologies = [...technologies, currentTech];
       currentTech = '';
     }
   }
-
-  function removeImage(index: number) {
-    images = images.filter((_, i) => i !== index);
-  }
 </script>
 
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-4xl font-bold mb-8">Dashboard Admin</h1>
+<div class="container px-4 py-8 mx-auto">
+  <h1 class="mb-8 text-4xl font-bold">Dashboard Admin</h1>
 
   <!-- Navigation Tabs -->
   <div class="mb-8 border-b">
@@ -134,7 +101,7 @@
           todayVisits={$statsStore.dailyStats[$statsStore.dailyStats.length - 1]?.views || 0}
           popularPages={$statsStore.popularPages}
         />
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <VisitorsChart dailyStats={$statsStore.dailyStats} />
           <RecentVisits recentVisits={$statsStore.recentVisits} />
         </div>
@@ -145,17 +112,17 @@
   <!-- Projects Tab -->
   {#if activeTab === 'projects'}
     <div class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Gestion des Projets</h2>
+      <h2 class="mb-6 text-2xl font-bold">Gestion des Projets</h2>
       
       {#if error}
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div class="px-4 py-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
           {error}
         </div>
       {/if}
 
-      <form on:submit|preventDefault={handleSubmit} class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
+      <form on:submit|preventDefault={handleSubmit} class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
         <div class="mb-4">
-          <label class="block text-gray-700 mb-2" for="title">Titre</label>
+          <label class="block mb-2 text-gray-700" for="title">Titre</label>
           <input
             id="title"
             type="text"
@@ -166,7 +133,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-gray-700 mb-2" for="description">Description</label>
+          <label class="block mb-2 text-gray-700" for="description">Description</label>
           <textarea
             id="description"
             bind:value={description}
@@ -177,48 +144,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-gray-700 mb-2" for="logo">Logo</label>
-          <input
-            id="logo"
-            type="file"
-            accept="image/*"
-            on:change={handleLogoChange}
-            class="w-full"
-            required
-          />
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-gray-700 mb-2">Images</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            on:change={handleImagesChange}
-            class="w-full mb-2"
-          />
-          <div class="grid grid-cols-2 gap-2">
-            {#each images as image, i}
-              <div class="relative">
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt="Preview"
-                  class="w-full h-32 object-cover rounded"
-                />
-                <button
-                  type="button"
-                  class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
-                  on:click={() => removeImage(i)}
-                >
-                  ×
-                </button>
-              </div>
-            {/each}
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-gray-700 mb-2">Technologies</label>
+          <label class="block mb-2 text-gray-700">Technologies</label>
           <div class="flex gap-2">
             <input
               type="text"
@@ -229,14 +155,14 @@
             <button
               type="button"
               on:click={addTech}
-              class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             >
               Ajouter
             </button>
           </div>
-          <div class="mt-2 flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 mt-2">
             {#each technologies as tech}
-              <div class="bg-gray-100 px-3 py-1 rounded flex items-center gap-2">
+              <div class="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded">
                 <span>{tech}</span>
                 <button
                   type="button"
@@ -252,7 +178,7 @@
 
         <button
           type="submit"
-          class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+          class="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:opacity-50"
           disabled={isLoading}
         >
           {isLoading ? 'Ajout en cours...' : 'Ajouter le projet'}
@@ -260,15 +186,15 @@
       </form>
 
       <div class="mt-8">
-        <h2 class="text-2xl font-bold mb-4">Projets existants</h2>
+        <h2 class="mb-4 text-2xl font-bold">Projets existants</h2>
         <div class="space-y-4">
           {#each $projectStore as project}
-            <div class="bg-white p-4 rounded-lg shadow">
-              <div class="flex justify-between items-center">
+            <div class="p-4 bg-white rounded-lg shadow">
+              <div class="flex items-center justify-between">
                 <div>
                   <h3 class="text-xl font-semibold">{project.title}</h3>
                   <p class="text-sm text-gray-500">
-                    {new Date(project.createdAt).toLocaleDateString()}
+                    {new Date(project.created_at).toLocaleDateString()}
                   </p>
                 </div>
                 <button

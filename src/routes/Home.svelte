@@ -19,14 +19,14 @@
 
 <main class="container px-4 py-8 mx-auto">
   <section class="mb-16 text-center animate-fade-in">
-    <h1 class="mb-6 text-5xl font-bold">{$contentStore.hero.title}</h1>
-    <p class="max-w-3xl mx-auto text-xl text-gray-600">
-      {$contentStore.hero.subtitle}
+    <h1 class="mb-6 text-2xl font-semibold">Développeur Web, Mobile et Expériences Immersives</h1>
+    <p class="max-w-3xl mx-auto text-gray-600 text-md">
+      Donnez vie à vos projets numériques : des sites web et applications mobiles performants aux expériences immersives en AR et VR, en passant par des logiciels sur mesure. Transformez vos idées en solutions innovantes et engageantes.
     </p>
   </section>
 
   <section class="mb-16">
-    <h2 class="mb-8 text-3xl font-bold text-center animate-fade-in">Derniers Projets</h2>
+    <h2 class="mb-8 text-2xl font-semibold text-center animate-fade-in">Derniers Projets</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 stagger-delay">
       {#each latestProjects as project}
         <ProjectCard {project} />
@@ -35,9 +35,8 @@
   </section>
 
   <section class="mb-16 animate-fade-in">
-    <h2 class="mb-8 text-3xl font-bold text-center">{$contentStore.contact.title}</h2>
-    <p class="mb-8 text-center text-gray-600">{$contentStore.contact.description}</p>
-    <div class="max-w-2xl mx-auto">
+    <h2 class="mb-8 text-2xl font-semibold text-center">Discutons de notre futur collaboration</h2>
+    <div class="w-[100%] bg-red-400">
       <ContactForm />
     </div>
   </section>

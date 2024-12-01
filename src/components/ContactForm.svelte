@@ -1,73 +1,80 @@
 <script lang="ts">
-  let name = '';
-  let email = '';
-  let message = '';
-  let submitted = false;
-
-  function handleSubmit() {
-    // Ici vous pouvez ajouter la logique pour envoyer le formulaire
-    console.log({ name, email, message });
-    
-    submitted = true;
-    setTimeout(() => {
-      // Reset form
-      name = '';
-      email = '';
-      message = '';
-      submitted = false;
-    }, 3000);
-  }
+  import { Icon } from 'svelte-hero-icons';
+  import { DevicePhoneMobile, Envelope, Map } from 'svelte-hero-icons';
 </script>
 
-<form 
-  on:submit|preventDefault={handleSubmit} 
-  class="bg-white p-6 rounded-lg shadow transform transition-all duration-300 hover:shadow-lg"
->
-  <div class="mb-4 transform transition-all duration-300 hover:translate-x-2">
-    <label class="block text-gray-700 mb-2" for="name">Nom</label>
-    <input
-      id="name"
-      type="text"
-      bind:value={name}
-      class="w-full px-3 py-2 border rounded transition-all duration-300 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 hover:border-blue-300"
-      required
-    />
+<div class="grid grid-cols-2 gap-8 p-8 mx-auto bg-white shadow-2xl contact-card rounded-2xl">
+  <div class="flex flex-col justify-center space-y-2 left-section">
+    <h2 class="mb-6 text-3xl font-extrabold text-gray-900">
+      Contactez-moi
+    </h2>
+    <p class="mb-4 text-gray-600">
+      N'hésitez pas à me contacter pour toute opportunité ou collaboration. Je suis ouvert à de nouveaux projets et défis.
+    </p>
+    <div class="space-y-2 contact-decorations">
+      <div class="w-16 h-1 bg-blue-500 rounded"></div>
+      <div class="w-10 h-1 bg-green-500 rounded"></div>
+    </div>
   </div>
 
-  <div class="mb-4 transform transition-all duration-300 hover:translate-x-2">
-    <label class="block text-gray-700 mb-2" for="email">Email</label>
-    <input
-      id="email"
-      type="email"
-      bind:value={email}
-      class="w-full px-3 py-2 border rounded transition-all duration-300 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 hover:border-blue-300"
-      required
-    />
-  </div>
+  <div class="space-y-6 right-section">
+    <div class="flex items-center pb-4 space-x-4 border-b contact-item">
+      <div class="p-3 rounded-full icon-wrapper bg-blue-50">
+        <Icon src={DevicePhoneMobile} class="w-6 h-6 text-blue-500"/>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Téléphone</p>
+        <a href="tel:0658607675" class="text-lg text-gray-800 transition hover:text-blue-600">
+          0658607675
+        </a>
+      </div>
+    </div>
 
-  <div class="mb-4 transform transition-all duration-300 hover:translate-x-2">
-    <label class="block text-gray-700 mb-2" for="message">Message</label>
-    <textarea
-      id="message"
-      bind:value={message}
-      class="w-full px-3 py-2 border rounded transition-all duration-300 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 hover:border-blue-300"
-      rows="4"
-      required
-    ></textarea>
-  </div>
+    <div class="flex items-center pb-4 space-x-4 border-b contact-item">
+      <div class="p-3 rounded-full icon-wrapper bg-green-50">
+        <Icon src={Envelope} class="w-6 h-6 text-green-500"/>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Email</p>
+        <a href="mailto:sofiane.flici14@gmail.com" class="text-lg text-gray-800 transition hover:text-green-600">
+          sofiane.flici14@gmail.com
+        </a>
+      </div>
+    </div>
 
-  <button
-    type="submit"
-    class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-95 disabled:opacity-50"
-    disabled={submitted}
-  >
-    {#if submitted}
-      <span class="flex items-center justify-center">
-        <i class="fas fa-check mr-2"></i>
-        Message envoyé !
-      </span>
-    {:else}
-      Envoyer
-    {/if}
-  </button>
-</form>
+    <div class="flex items-center space-x-4 contact-item">
+      <div class="p-3 rounded-full icon-wrapper bg-red-50">
+        <Icon src={Map} class="w-6 h-6 text-red-500"/>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Localisation</p>
+        <span class="text-lg text-gray-800">
+          Marseille, France
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .contact-card {
+    max-width: 900px;
+    width: 95%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-item {
+    transition: transform 0.2s ease;
+  }
+
+  .contact-item:hover {
+    transform: translateX(5px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

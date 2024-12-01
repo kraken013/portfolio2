@@ -1,52 +1,99 @@
 <script lang="ts">
   import type { Project } from '../lib/stores/ProjectStore';
-  import Carousel from 'svelte-carousel';
-  import { onMount } from 'svelte';
+  import Carousel from 'svelte-carousel'; // @ts-ignore
 
   export let project: Project;
   let isHovered = false;
+  let isModalOpen = false;
+  let selectedImage = '';
+
+  const openModal = (image: string) => {
+    selectedImage = image;
+    isModalOpen = true;
+  };
+
+  const closeModal = () => {
+    isModalOpen = false;
+    selectedImage = '';
+  };
 </script>
 
-<div 
-  class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl animate-scale-in"
+<style>
+  /* Optionally, improve modal styling */
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+</style>
+
+<div
+  role="button"
+  tabindex="0"
+  aria-label="Project card: {project.title}"
+  class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl max-w-md mx-auto sm:max-w-md"
   on:mouseenter={() => isHovered = true}
   on:mouseleave={() => isHovered = false}
+  on:keydown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      isHovered = !isHovered;
+    }
+  }}
 >
-  <img
-    src={project.localLogo || project.logo}
-    alt={`Logo ${project.title}`}
-    class="w-full h-48 object-cover transition-transform duration-300"
-    class:scale-105={isHovered}
-  />
-  
-  <div class="p-6">
-    <h3 class="text-xl font-bold mb-2">{project.title}</h3>
-    <p class="text-gray-600 mb-4">{project.description}</p>
-    
-    <div class="mb-4">
-      <Carousel
-        autoplay
-        autoplayDuration={5000}
-        pauseOnFocus
-      >
-        {#each (project.localImages || project.images) as image}
-          <div class="carousel-item">
-            <img 
-              src={image} 
-              alt="" 
-              class="w-full h-64 object-cover transition-all duration-300 hover:scale-105" 
-            />
-          </div>
-        {/each}
-      </Carousel>
-    </div>
-    
-    <div class="flex flex-wrap gap-2">
-      {#each project.technologies as tech}
-        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm transform transition-all duration-300 hover:scale-110 hover:bg-blue-200">
-          {tech}
-        </span>
+  <!-- Title -->
+  <h3 class="mt-4 mb-4 ml-4 font-semibold text-center text-gray-800 text-md sm:text-md">{project.title}</h3>
+
+  <!-- Description -->
+  <div class="w-[100%] content-center bg-re-500">
+    <!-- <p class="px-4 py-1 mt-2 text-base text-gray-600 sm:text-xs w-[100%] justify-center align-center mb-2">
+      {project.description}
+    </p> -->
+  </div>
+
+  <!-- Image Carousel -->
+  <div class="relative">
+    <Carousel
+      autoplay
+      autoplayDuration={5000}
+      pauseOnFocus
+    >
+      {#each [1, 2, 3, 4] as index}
+        <img 
+          src={`assets/project/images/${project.title}/${index}.png`} 
+          alt={`Image ${index} of ${project.title}`} 
+          class="object-cover w-full cursor-pointer h-52 sm:h-38"
+          on:click={() => openModal(`assets/project/images/${project.title}/${index}.png`)}
+        />
       {/each}
-    </div>
+    </Carousel>
+  </div>
+
+  <!-- Tags -->
+  <div class="justify-between p-6 text-center">
+    {#each project.technologies as tech}
+      <div class="inline-block px-3 py-1 mb-2 mr-2 text-sm font-medium text-purple-700 bg-purple-100 rounded-full shadow-sm hover:shadow-md">
+        {tech}
+      </div>
+    {/each}
   </div>
 </div>
+
+<!-- Modal for Enlarged Image -->
+{#if isModalOpen}
+  <div 
+    class="fixed inset-0 z-50 flex items-center justify-center modal-backdrop "
+    on:click={closeModal}
+  >
+    <div 
+      class="relative max-w-3xl p-4 mx-auto transition-all duration-300 transform scale-100 bg-white rounded-lg shadow-lg w-[80%]"
+      on:click|stopPropagation
+    >
+      <button 
+        class="absolute text-xl text-gray-600 top-2 right-2 hover:text-gray-900"
+        on:click={closeModal}
+        aria-label="Close modal"
+      >
+        &times;
+      </button>
+      <img src={selectedImage} alt="Enlarged Image" class="max-w-full max-h-[80vh] rounded-lg"/>
+    </div>
+  </div>
+{/if}

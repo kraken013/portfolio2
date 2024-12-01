@@ -5,7 +5,7 @@
 </script>
 
 <div class="mt-16 text-center animate-fade-in">
-  <h3 class="text-2xl font-semibold mb-6">Retrouvez-moi aussi sur :</h3>
+  <h3 class="mb-6 text-2xl font-semibold">Retrouvez-moi aussi sur :</h3>
   <div class="flex justify-center gap-6 stagger-delay">
     {#each socials as social}
       <a

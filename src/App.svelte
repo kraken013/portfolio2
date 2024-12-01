@@ -5,6 +5,7 @@
   import Projects from './routes/Projects.svelte';
   import Admin from './routes/Admin.svelte';
   import Login from './routes/Login.svelte';
+  import Experience from './routes/Experience.svelte';
   import Register from './routes/Register.svelte';
   import { authStore } from './lib/stores/AuthStore';
   import { statsStore } from './lib/stores/StatsStore';
@@ -13,6 +14,7 @@
   const routes = {
     '/': Home,
     '/projects': Projects,
+    '/experience': Experience,
     '/admin': Admin,
     '/login': Login,
     '/register': Register
@@ -30,10 +32,25 @@
     }
   }
 </script>
+<div class="w-full">
 
-<Nav />
+  <Nav />
+</div>
 <Router 
   {routes} 
   on:routeLoaded={handleRouteLoaded}
   on:conditionsFailed={conditionsFailed}
 />
+
+<style>
+  @font-face {
+    font-family: 'Inter'; 
+    src: url('/fonts/Inter.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+</style>

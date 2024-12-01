@@ -28,9 +28,9 @@
   }
 </script>
 
-<section class="bg-gray-900 py-16 mt-16 animate-fade-in">
-  <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-white text-center mb-12">Ce que disent nos clients</h2>
+<section class="py-16 mt-16 bg-gray-800 animate-fade-in">
+  <div class="container px-4 mx-auto">
+    <h2 class="mb-12 text-2xl font-bold text-center text-white">Ce que disent mes collaborateur</h2>
 
     {#if testimonials.length > 0}
       <Carousel
@@ -53,8 +53,8 @@
                   </svg>
                 {/each}
               </div>
-              <p class="text-gray-600 mb-4">{testimonial.comment}</p>
-              <div class="flex justify-between items-center">
+              <p class="mb-4 text-gray-600">{testimonial.comment}</p>
+              <div class="flex items-center justify-between">
                 <span class="font-semibold text-gray-800">{testimonial.name}</span>
                 <span class="text-sm text-gray-500">{formatDate(testimonial.createdAt)}</span>
               </div>
@@ -63,20 +63,20 @@
         {/each}
       </Carousel>
     {:else}
-      <p class="text-center text-gray-400 mb-8">Aucun avis pour le moment. Soyez le premier à en laisser un !</p>
+      <p class="mb-8 text-center text-gray-400">Aucun avis pour le moment. Soyez le premier à en laisser un !</p>
     {/if}
 
-    <div class="text-center mt-8">
+    <div class="mt-8 text-center">
       <button
         on:click={toggleForm}
-        class="bg-blue-500 text-white px-6 py-3 rounded-lg transform transition-all duration-300 hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95"
+        class="px-6 py-3 text-white transition-all duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95"
       >
         {showForm ? 'Fermer' : 'Laisser un avis'}
       </button>
     </div>
 
     {#if showForm}
-      <div class="mt-8 max-w-2xl mx-auto animate-scale-in">
+      <div class="max-w-2xl mx-auto mt-8 animate-scale-in">
         <TestimonialForm on:submitted={toggleForm} />
       </div>
     {/if}
