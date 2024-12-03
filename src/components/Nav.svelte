@@ -38,8 +38,6 @@
           >
             Déconnexion
           </button>
-        {:else}
-          <a href="/login" use:link class="text-gray-600 hover:text-gray-900">Login</a>
         {/if}
       </div>
     </div>
