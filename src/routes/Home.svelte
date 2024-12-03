@@ -39,10 +39,10 @@
     </div>
 </section>
 
-<section class="mb-16">
-    <h2 class="mb-8 text-2xl font-semibold text-center">Compétences</h2>
+<!-- <section class="mb-16"> -->
+    <!-- <h2 class="mb-8 text-2xl font-semibold text-center">Compétences</h2> -->
     <!-- <TreeComponent /> -->
-</section>
+<!-- </section> -->
 
   <section class="mb-16">
     <h2 class="mb-8 text-2xl font-semibold text-center">Discutons de notre futur collaboration</h2>
