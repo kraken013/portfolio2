@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Project } from '../lib/stores/ProjectStore';
-  import Carousel from 'svelte-carousel'; // @ts-ignore
+  // @ts-ignore
+  import Carousel from 'svelte-carousel'; 
 
   export let project: Project;
   let isHovered = false;

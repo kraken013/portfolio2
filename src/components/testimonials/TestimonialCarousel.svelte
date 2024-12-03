@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  //@ts-ignore
   import Carousel from 'svelte-carousel';
   import type { Testimonial } from '../../lib/stores/TestimonialStore';
   import { testimonialStore } from '../../lib/stores/TestimonialStore';
@@ -9,7 +10,8 @@
   let testimonials: Testimonial[] = [];
 
   onMount(async () => {
-    await testimonialStore.loadTestimonials();
+    // Load only approved testimonials
+    await testimonialStore.loadApprovedTestimonials();
     testimonialStore.subscribe(value => {
       testimonials = value;
     });
@@ -19,7 +21,9 @@
     showForm = !showForm;
   }
 
-  function formatDate(date: Date): string {
+  function formatDate(dateString: string): string {
+    // Parse the ISO string to a Date object
+    const date = new Date(dateString);
     return new Intl.DateTimeFormat('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -30,7 +34,7 @@
 
 <section class="py-16 mt-16 bg-gray-800 animate-fade-in">
   <div class="container px-4 mx-auto">
-    <h2 class="mb-12 text-2xl font-bold text-center text-white">Ce que disent mes collaborateur</h2>
+    <h2 class="mb-12 text-2xl font-bold text-center text-white">Ce que disent mes collaborateurs</h2>
 
     {#if testimonials.length > 0}
       <Carousel
@@ -56,7 +60,7 @@
               <p class="mb-4 text-gray-600">{testimonial.comment}</p>
               <div class="flex items-center justify-between">
                 <span class="font-semibold text-gray-800">{testimonial.name}</span>
-                <span class="text-sm text-gray-500">{formatDate(testimonial.createdAt)}</span>
+                <span class="text-sm text-gray-500">{formatDate(testimonial.created_at)}</span>
               </div>
             </div>
           </div>

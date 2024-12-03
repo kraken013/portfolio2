@@ -32,8 +32,7 @@
     }
   }
 </script>
-<div class="w-full">
-
+<div class="mb-16">
   <Nav />
 </div>
 <Router 

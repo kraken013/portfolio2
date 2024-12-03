@@ -61,6 +61,9 @@
     max-width: 900px;
     width: 95%;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes par défaut */
+    gap: 2rem;
   }
 
   .contact-item {
@@ -74,7 +77,30 @@
   /* Responsive */
   @media (max-width: 768px) {
     .contact-card {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr; /* Une seule colonne pour petits écrans */
+    }
+
+    .left-section, .right-section {
+      text-align: center; /* Centrer le texte pour les petits écrans */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contact-card {
+      padding: 1rem; /* Réduction des marges */
+      gap: 1rem; /* Espacement réduit */
+    }
+
+    h2 {
+      font-size: 1.2rem; /* Texte légèrement plus petit */
+    }
+
+    p {
+      font-size: 0.875rem; /* Ajustement des tailles de texte */
+    }
+
+    .icon-wrapper {
+      padding: 1rem; /* Ajustement du padding */
     }
   }
 </style>

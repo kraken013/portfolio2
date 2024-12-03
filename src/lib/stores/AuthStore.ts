@@ -9,57 +9,63 @@ export interface AuthUser {
 }
 
 function createAuthStore() {
-  const { subscribe, set } = writable<AuthUser | null>(null);
-
-  // Écouter les changements d'authentification
-  supabase.auth.onAuthStateChange(async (event, session) => {
-    if (session?.user) {
-      try {
-        const { data: adminData, error } = await supabase
-          .from("admins")
-          .select("*")
-          .eq("user_id", session.user.id)
-          .single();
-
-        if (error) {
-          console.error("Erreur lors de la vérification de l'admin:", error);
-          set(null); // Réinitialiser si une erreur se produit
-          return;
-        }
-
-        set({
-          uid: session.user.id,
-          email: session.user.email || "Email inconnu", // Valeur par défaut en cas de undefined
-          isAdmin: !!adminData,
-        });
-      } catch (error) {
-        console.error("Erreur inattendue lors de l'authentification:", error);
-        set(null);
-      }
-    } else {
-      set(null);
-    }
-  });
+  const { subscribe, set, update } = writable<AuthUser | null>(null);
 
   return {
     subscribe,
 
+    async init() {
+      const session = await supabase.auth.getSession();
+      if (session.data.session?.user) {
+        await this.checkAndSetUser(session.data.session.user);
+      }
+
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        if (session?.user) {
+          await this.checkAndSetUser(session.user);
+        } else {
+          set(null);
+        }
+      });
+    },
+
+    async checkAndSetUser(user: User) {
+      try {
+        const { data: adminData, error } = await supabase
+          .from("admins")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
+
+        if (error) {
+          console.error("Admin check error:", error);
+          set(null);
+          return;
+        }
+
+        set({
+          uid: user.id,
+          email: user.email || "Email inconnu",
+          isAdmin: !!adminData,
+        });
+      } catch (error) {
+        console.error("Unexpected authentication error:", error);
+        set(null);
+      }
+    },
+
     async signIn(email: string, password: string) {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) throw error;
-
-      if (user) {
+      if (data.user) {
         const { data: adminData } = await supabase
           .from("admins")
           .select("*")
-          .eq("user_id", user.id)
+          .eq("user_id", data.user.id)
           .single();
 
         if (!adminData) {
@@ -70,9 +76,24 @@ function createAuthStore() {
     },
 
     async signOut() {
-      await supabase.auth.signOut();
+      try {
+        console.log("Tentative de déconnexion");
+        await supabase.auth.signOut();
+        set(null); // Efface l'état de l'utilisateur dans le store
+        console.log("Déconnexion réussie");
+      } catch (error) {
+        console.error("Erreur lors de la déconnexion :", error);
+      }
     },
   };
 }
 
 export const authStore = createAuthStore();
+
+authStore.init();
+
+export const isAuthenticated = writable(false);
+
+authStore.subscribe((user) => {
+  isAuthenticated.set(!!user);
+});

@@ -79,6 +79,28 @@ function createProjectStore() {
         throw error;
       }
     },
+
+    async updateProject(project: Project) {
+      try {
+        const { error } = await supabase
+          .from("projects")
+          .update({
+            title: project.title,
+            description: project.description,
+            technologies: project.technologies,
+          })
+          .eq("id", project.id);
+
+        if (error) throw error;
+
+        update((projects) =>
+          projects.map((p) => (p.id === project.id ? { ...p, ...project } : p))
+        );
+      } catch (error) {
+        console.error("Error updating project:", error);
+        throw error;
+      }
+    },
   };
 }
 

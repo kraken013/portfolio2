@@ -20,13 +20,20 @@
     error = '';
 
     try {
+      // Envoi du témoignage à la base de données 
+      // Notez que is_approved est géré par défaut dans le store, pas besoin de le spécifier ici
       await testimonialStore.addTestimonial({
         name,
         rating,
         comment
       });
-      
-      dispatch('submitted');
+
+      dispatch('submitted'); // Déclenche un événement pour informer le parent
+
+      // Réinitialiser les champs après soumission
+      name = '';
+      comment = '';
+      rating = 5;
     } catch (e) {
       error = 'Une erreur est survenue. Veuillez réessayer.';
       console.error(e);
@@ -36,11 +43,11 @@
   }
 </script>
 
-<div class="bg-white p-6 rounded-lg shadow-lg">
-  <h3 class="text-xl font-bold mb-4">Laisser un avis</h3>
+<div class="p-6 bg-white rounded-lg shadow-lg">
+  <h3 class="mb-4 text-xl font-bold">Laisser un avis</h3>
 
   {#if error}
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <div class="px-4 py-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
       {error}
     </div>
   {/if}
@@ -52,7 +59,7 @@
         type="text"
         id="name"
         bind:value={name}
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200"
+        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200"
         required
       />
     </div>
@@ -84,14 +91,14 @@
         id="comment"
         bind:value={comment}
         rows="4"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200"
+        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200"
         required
       ></textarea>
     </div>
 
     <button
       type="submit"
-      class="w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
+      class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
       disabled={isSubmitting}
     >
       {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
