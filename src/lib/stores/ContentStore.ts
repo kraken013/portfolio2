@@ -44,7 +44,7 @@ const defaultContent: HomeContent = {
     {
       name: "LinkedIn",
       icon: "fa-linkedin-in",
-      url: "https://linkedin.com/in/votre-profil",
+      url: "https://www.linkedin.com/in/sofiane-flici/",
       color: "bg-[#0077b5]",
     },
     {
@@ -53,12 +53,12 @@ const defaultContent: HomeContent = {
       url: "https://www.malt.fr/profile/votre-profil",
       color: "bg-[#FC5757]",
     },
-    {
-      name: "GitHub",
-      icon: "fa-github",
-      url: "https://github.com/votre-profil",
-      color: "bg-[#333333]",
-    },
+    // {
+    //   name: "GitHub",
+    //   icon: "fa-github",
+    //   url: "https://github.com/votre-profil",
+    //   color: "bg-[#333333]",
+    // },
   ],
 };
 

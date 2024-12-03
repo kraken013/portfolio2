@@ -6,6 +6,7 @@
   import ContactForm from '../components/ContactForm.svelte';
   import TestimonialCarousel from '../components/testimonials/TestimonialCarousel.svelte';
   import SocialButtons from '../components/SocialButtons.svelte';
+  // import TreeComponent from '../components/TreeComponent.svelte';
 
   onMount(async () => {
     await Promise.all([
@@ -38,11 +39,14 @@
     </div>
 </section>
 
+<section class="mb-16">
+    <h2 class="mb-8 text-2xl font-semibold text-center">Compétences</h2>
+    <!-- <TreeComponent /> -->
+</section>
+
   <section class="mb-16">
     <h2 class="mb-8 text-2xl font-semibold text-center">Discutons de notre futur collaboration</h2>
-    <div class="w-[100%] bg-red-400">
       <ContactForm />
-    </div>
   </section>
 
   <SocialButtons socials={$contentStore.socials} />
