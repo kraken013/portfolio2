@@ -38,19 +38,11 @@
         {/each}
     </div>
 </section>
-
-<!-- <section class="mb-16"> -->
-    <!-- <h2 class="mb-8 text-2xl font-semibold text-center">Compétences</h2> -->
-    <!-- <TreeComponent /> -->
-<!-- </section> -->
-
   <section class="mb-16">
     <h2 class="mb-8 text-2xl font-semibold text-center">Discutons de notre futur collaboration</h2>
       <ContactForm />
   </section>
 
   <SocialButtons socials={$contentStore.socials} />
-
-  
 </main>
 <TestimonialCarousel />
