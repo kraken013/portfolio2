@@ -27,7 +27,7 @@
     isLoading = true;
     await authStore.init();
     if (!user || !user.isAdmin) {
-      window.location.href = '/login';  // Redirection vers la page de login si l'utilisateur n'est pas admin
+      window.location.href = '/';
     } else {
       await testimonialStore.loadTestimonials();
       isLoading = false;
@@ -106,6 +106,7 @@
 </script>
 
 <div class="container px-4 py-8 mx-auto">
+  {#if user}
   <h1 class="mb-8 text-4xl font-bold">Dashboard Admin</h1>
 
   <!-- Navigation Tabs -->
@@ -323,5 +324,10 @@
         {/each}
       </div>
     </div>
+  {/if}
+  {:else if isLoading}
+    <p>Chargement...</p>
+  {:else}
+    <p>Vous n'êtes pas autorisé à accéder à cette page. Redirection...</p>
   {/if}
 </div>

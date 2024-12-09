@@ -111,30 +111,7 @@
         {/each}
     </section>
     
-    <section class="w-full max-w-2xl">
-    <h2 class="mb-8 text-xl font-semibold text-gray-800">Réalisations & Certifications</h2>
-    {#each achievements as achievement}
-        <div class="relative pl-8 mb-6 border-l-4 border-green-500">
-        <div class="absolute -left-[26px] top-0 w-12 h-12 rounded-full flex items-center justify-center bg-green-100">
-            <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            class="w-6 h-6 text-green-500" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-            >
-            {@html renderIcon(achievement.status)}
-            </svg>
-        </div>
-        
-        <div class="p-6 bg-white rounded-lg shadow-md">
-            <h2 class="mb-2 font-semibold text-gray-800 text-md">{achievement.title}</h2>
-            <h3 class="mb-3 text-gray-600 text-md">{achievement.company} | {achievement.date}</h3>
-            <p class="text-gray-700">{achievement.description}</p>
-        </div>
-        </div>
-    {/each}
-    </section>
+    
       
     <section class="w-full max-w-2xl mb-12">
       <h2 class="mb-8 text-xl font-semibold text-gray-800">Études</h2>
@@ -176,4 +153,29 @@
         </div>
       {/each}
     </section>
+<section class="w-full max-w-2xl">
+    <h2 class="mb-8 text-xl font-semibold text-gray-800">Réalisations & Certifications</h2>
+    {#each achievements as achievement}
+        <div class="relative pl-8 mb-6 border-l-4 border-green-500">
+        <div class="absolute -left-[26px] top-0 w-12 h-12 rounded-full flex items-center justify-center bg-green-100">
+            <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            class="w-6 h-6 text-green-500" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+            >
+            {@html renderIcon(achievement.status)}
+            </svg>
+        </div>
+        
+        <div class="p-6 bg-white rounded-lg shadow-md">
+            <h2 class="mb-2 font-semibold text-gray-800 text-md">{achievement.title}</h2>
+            <h3 class="mb-3 text-gray-600 text-md">{achievement.company} | {achievement.date}</h3>
+            <p class="text-gray-700">{achievement.description}</p>
+        </div>
+        </div>
+    {/each}
+    </section>
+    
   </div>
