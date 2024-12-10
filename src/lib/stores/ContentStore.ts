@@ -47,12 +47,12 @@ const defaultContent: HomeContent = {
       url: "https://www.linkedin.com/in/sofiane-flici/",
       color: "bg-[#0077b5]",
     },
-    {
-      name: "Malt",
-      icon: "fa-m",
-      url: "https://www.malt.fr/profile/votre-profil",
-      color: "bg-[#FC5757]",
-    },
+    // {
+    //   name: "Malt",
+    //   icon: "fa-m",
+    //   url: "https://www.malt.fr/profile/votre-profil",
+    //   color: "bg-[#FC5757]",
+    // },
     // {
     //   name: "GitHub",
     //   icon: "fa-github",

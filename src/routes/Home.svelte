@@ -11,7 +11,6 @@
   onMount(async () => {
     await Promise.all([
       projectStore.loadProjects(),
-      contentStore.loadContent()
     ]);
   });
 

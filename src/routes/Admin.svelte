@@ -151,7 +151,8 @@
       {#if $statsStore}
         <StatsOverview 
           totalVisits={$statsStore.totalVisits}
-          todayVisits={$statsStore.dailyStats[$statsStore.dailyStats.length - 1]?.views || 0}
+          uniqueVisitors={$statsStore.uniqueVisitors}
+          dailyUniqueVisitors={$statsStore.dailyUniqueVisitors}
           popularPages={$statsStore.popularPages}
         />
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
